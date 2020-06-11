@@ -31,7 +31,7 @@ class Login extends Component {
                             <input className="textbox" type="password" placeholder="Senha" onChange={e => this.setState({senha: e.target.value})}/>
                             <Botao value="Entrar"/>
                         </form>
-                        <p><Link className="registrar" to="/registrar">Não tenho login</Link></p>
+                        <p><Link className="registrar" to="/register">Não tenho login</Link></p>
                     </div>
                 </div>
             </div>

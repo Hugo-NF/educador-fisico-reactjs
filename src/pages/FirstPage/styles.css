@@ -1,0 +1,52 @@
+.FirstPage {
+    font-family: 'Abel', sans-serif;
+    font-size: 18pt;
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: #f7ae50;
+
+    display: flex;
+    justify-content: center;
+}
+
+.FirstPage .menu {
+    position: relative;
+    top: -20px;
+    display: flex;
+    list-style-type: none;
+}
+ 
+.registrar {
+    text-decoration: none;
+    color: #000;
+    font-size: 14pt;
+    position: relative;
+    top: -40px;
+    right: -5px;
+}
+
+.registrar:hover {
+    color: rgb(81, 81, 216);
+}
+
+/* propriedades do botao */
+.primary-btn {
+    color: #000;
+    background: #e09634;
+    border: 1px solid #000;
+}
+
+.primary-btn:hover {
+    background: #000;
+    border: 1px solid #f7ae50; 
+}
+
+.primary-btn span {
+    color: #000;
+}
+
+.primary-btn:hover span {
+    color: #f7ae50;
+}
