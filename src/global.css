@@ -4,8 +4,8 @@
     top: 0;
     left: 0;
     position: absolute;
-    background-color: #f7af507e;
-    height: 100%;
+    background-color: #f750507e;
+    height: auto;
     width: 100%;
 }
 
@@ -19,11 +19,69 @@
     text-align: center;
 }
 
+
+/* Navbar */
+.Navbar{
+    position: absolute;
+    display: block;
+    width: 100%;
+    margin-top: 0%;
+    top: 0px;
+
+}
+
+.Navbar menu {
+    position: fixed;
+    margin-top: 0%;
+    background-color: #ffffffec;
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid black;
+    box-shadow: 0px 2px 10px #ffffff69;
+}
+
+.Navbar ul{
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    margin-top: 0%;
+    margin-left: 50px;
+    border-left: 1px solid black;
+    width: 100%;
+    top: 10px;
+    list-style-type: none;
+}
+.Navbar .logo{
+    margin: 0 auto;
+    height: fit-content;
+    background-color: rgba(0, 0, 0, 0.4);
+    filter: brightness(1);
+    transition: filter 0.5s;
+}
+.Navbar .logo:hover{
+    filter: brightness(0.4);
+}
+
+.Navbar li{
+    display: inline;
+    margin-left: 40px;
+
+}
+.Navbar li + li{
+    margin-left: 80px;
+}
+
+
 input:focus, textarea:focus, select:focus, .textbox:focus, .primary-btn:focus{
     outline: none;
 }
 
+
+/* Botao */
 .primary-btn {
+    color: #fff;
+    background: #f75050;
+    border: 1px solid #fff;
     padding: 0px 52px;
     overflow: hidden;
     border-radius: 40px;
@@ -56,16 +114,17 @@ input:focus, textarea:focus, select:focus, .textbox:focus, .primary-btn:focus{
         padding: 8px 0; 
     } 
 }
-
-/* .primary-btn:hover {
+.primary-btn:hover {
     background: #fff;
-    border: 1px solid #e45447; 
-} */
+    border: 1px solid #f75050; 
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
 .primary-btn:hover:before {
     opacity: 0;
     transform: translate3d(0, 100%, 0); 
 }
 .primary-btn span {
+    color: #fff;
     display: inline-block;
     padding: 12px 0;
     opacity: 1;
@@ -75,6 +134,7 @@ input:focus, textarea:focus, select:focus, .textbox:focus, .primary-btn:focus{
 }
 
 .primary-btn:hover span {
+    color: #f75050;
     opacity: 1;
     transform: translate3d(0, 0, 0); 
 }
