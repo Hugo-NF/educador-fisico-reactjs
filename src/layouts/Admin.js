@@ -62,6 +62,7 @@ class Admin extends React.Component {
   render() {
     return (
       <>
+      {/* sidebar */}
         <Sidebar
           {...this.props}
           routes={routes}
@@ -72,14 +73,17 @@ class Admin extends React.Component {
           }}
         />
         <div className="main-content" ref="mainContent">
+          {/* navbar */}
           <AdminNavbar
             {...this.props}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
+          {/* conteudo */}
           <Switch>
             {this.getRoutes(routes)}
             <Redirect from="*" to="/admin/index" />
           </Switch>
+          {/* footer */}
           <Container fluid>
             <AdminFooter />
           </Container>
