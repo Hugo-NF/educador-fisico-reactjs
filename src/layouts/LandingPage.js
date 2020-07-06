@@ -32,15 +32,15 @@ class LandingPage extends React.Component {
       <>
         <div className="main-content">
           <AuthNavbar />
-          <div className="header bg-gradient-info py-7 py-lg-8">
+          <div className="header bg-gradient-indigo py-7">
             <Container>
-              <div className="header-body text-center mb-7">
+              <div className="header-body text-center">
                 <Row className="justify-content-center">
                   <Col lg="5" md="6">
                     <h1 className="text-white">Projeto EDUcador!</h1>
-                    <p className="text-lead text-light">
+                    <h3 className="text-lead text-light">
                       Treino sem sair de casa
-                    </p>
+                    </h3>
                   </Col>
                 </Row>
               </div>
@@ -62,11 +62,11 @@ class LandingPage extends React.Component {
             </div>
           </div>
           {/* Page content */}
-          <Container className="mt--8 pb-5">
+          <Container>
             <Row className="justify-content-center">
               <Switch>
                 {this.getRoutes(routes)}
-                <Redirect from="*" to="/auth/login" />
+                <Redirect from="*" to="/" />
               </Switch>
             </Row>
           </Container>

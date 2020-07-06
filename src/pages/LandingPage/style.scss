@@ -1,13 +1,18 @@
-p {
-    color: purple;
+h1, h2, h3, h4, h5, h6 {
+    color: gray;
 }
-.LandingPage {
-    z-index: 1;
+p {
+    color: white;
+}.LandingPage {
+    padding-top: 5px;
+    z-index: 100;
+    text-align: center;
 }
 .Title {
-    padding-top: 5px;
+    padding-top: 10px;
     text-align: center;
 }
 .Content {
-    text-align: center;
+    padding-top: 5px;
+
 }
