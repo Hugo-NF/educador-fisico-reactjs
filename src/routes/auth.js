@@ -3,8 +3,8 @@ import Index from "../pages/Auth/Index";
 
 var routes = [
     {
-      path: "/index",
-      name: "Deu bom",
+      path: "",
+      name: "Projeto EDUcador",
       icon: "ni ni-tv-2 text-primary",
       component: Index,
     }

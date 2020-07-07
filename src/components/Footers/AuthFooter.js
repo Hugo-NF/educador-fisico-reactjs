@@ -25,7 +25,7 @@ class Login extends React.Component {
   render() {
     return (
       <>
-        <footer className="py-5">
+        <footer className="footer py-4 bg-indigo">
           <Container>
             <Row className="align-items-center justify-content-xl-between">
               <Col xl="6">
