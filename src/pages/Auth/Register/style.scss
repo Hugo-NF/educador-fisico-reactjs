@@ -1,0 +1,52 @@
+.Register {
+    font-family: 'Abel', sans-serif;
+    font-size: 18pt;
+    
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Register .content {
+    background-color: #ffffffec;
+    padding: 100px;
+    padding-top: 150px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 10pt;
+    display: flex;
+    justify-content: space-between;
+}
+#logintext {
+    position: relative;
+    bottom: 60px;
+    max-width: 400px;
+    max-height: 300px;
+    margin-right: 50px;
+}
+.Register .content form{
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 300px;
+    max-height: 130px;
+}
+.Register .content form input + *{
+    margin-top: 10px;
+}
+ 
+.registrar {
+    text-decoration: none;
+    color: #000;
+    font-size: 14pt;
+    position: relative;
+    top: -40px;
+    right: -5px;
+}
+
+.registrar:hover {
+    color: rgb(81, 81, 216);
+}
