@@ -34,6 +34,12 @@ import {
 import UserHeader from "components/Headers/UserHeader.js";
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    window.document.title = this.props.title;
+  }
+
   render() {
     return (
       <>

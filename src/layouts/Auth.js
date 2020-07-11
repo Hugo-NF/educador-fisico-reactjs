@@ -33,12 +33,17 @@ class Auth extends React.Component {
   componentWillUnmount() {
     document.body.classList.remove("bg-default");
   }
+  renderPage = (props, prop) => {
+    props.title = prop.title;
+    return (<prop.component {...props} />);
+  }
+
   getRoutes = routes => {
     return routes.map((prop, key) => {
       return (
         <Route
           path={prop.layout + prop.path}
-          component={prop.component}
+          render={props => this.renderPage(props, prop)}
           key={key}
         />
       );

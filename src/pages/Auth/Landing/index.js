@@ -2,6 +2,12 @@ import React from "react";
 import "./style.scss";
 
 class Landing extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    window.document.title = this.props.title;
+  }
+  
   render() {
     return (
     <div className="landing-page">

@@ -32,12 +32,17 @@ class Admin extends React.Component {
     document.scrollingElement.scrollTop = 0;
     this.refs.mainContent.scrollTop = 0;
   }
+  renderPage = (props, prop) => {
+    props.title = prop.title;
+    return (<prop.component {...props} />);
+  }
+
   getRoutes = routes => {
     return routes.map((prop, key) => {
         return (
           <Route
             path={ prop.layout + prop.path }
-            component={prop.component}
+            render={props => this.renderPage(props, prop)}
             key={key}
           />
         );
