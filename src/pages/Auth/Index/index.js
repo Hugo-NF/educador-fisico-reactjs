@@ -4,11 +4,11 @@ import "./style.scss";
 class Index extends React.Component {
   render() {
     return (
-    <div className="LandingPage">
-      <div className="Title">
+    <div className="landing-page">
+      <div className="title">
         <h1>Treino para todos!</h1>
       </div>
-      <div className="Content">
+      <div className="content">
         <p>
           Este projeto visa disponibilizar treinos para quem gostaría de obter uma vida mais saudável, mas não tem condições de
           frequentar uma academia regularmente. Seja a academia, em um parque ou em sua residência, com vários equipamentos ou
@@ -16,10 +16,10 @@ class Index extends React.Component {
         </p>
       </div>
 
-      <div className="Title">
+      <div className="title">
           <h1>Como participar!</h1>
       </div>
-      <div className="Content">
+      <div className="content">
         <p>
           Muito fácil! Basta fazer o download do nosso App, e fazer seu cadastro como aluno e seguir 2 passos que o aplicativo
           te indicará. Com isso sua ficha será encaminhada a um de nossos professores, que por sua vez fará um treinamento
@@ -27,10 +27,10 @@ class Index extends React.Component {
         </p>
       </div>
 
-      <div className="Title">
+      <div className="title">
         <h1>Quem somos nós!</h1>
       </div>
-      <div className="Content">
+      <div className="content">
         <p>
           Somos todos graduandos com um objetivo em comum: permitir um estilo de vida mais saudável para todos, em quaisquer
           condições. Vemos esse projeto como um forma para ganharmos experiência no mercado de trabalho além de estamos

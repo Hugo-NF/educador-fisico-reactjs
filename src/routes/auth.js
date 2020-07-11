@@ -3,7 +3,7 @@ import Index from "../pages/Auth/Index";
 
 var routes = [
     {
-      path: "",
+      path: "/landing",
       name: "Projeto EDUcador",
       icon: "ni ni-tv-2 text-primary",
       component: Index,

@@ -79,11 +79,11 @@ class Auth extends React.Component {
             </div>
           </div>
           {/* Page content */}
-          <Container>
+          <Container className="mt-7 pb-5">
             <Row className="justify-content-center">
               <Switch>
                 {this.getRoutes(routes)}
-                <Redirect from="*" to="/" />
+                <Redirect from="*" to="/auth/login" />
               </Switch>
             </Row>
           </Container>
