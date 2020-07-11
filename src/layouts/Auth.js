@@ -37,7 +37,7 @@ class Auth extends React.Component {
     return routes.map((prop, key) => {
       return (
         <Route
-          path={`/${prop.path}`}
+          path={prop.layout + prop.path}
           component={prop.component}
           key={key}
         />

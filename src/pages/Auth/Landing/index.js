@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.scss";
 
-class Index extends React.Component {
+class Landing extends React.Component {
   render() {
     return (
     <div className="landing-page">
@@ -41,4 +41,4 @@ class Index extends React.Component {
     )
   }
 }
-export default Index;
+export default Landing;
