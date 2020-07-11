@@ -15,17 +15,17 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Landing from "../pages/Auth/Landing";
+import Home from "../pages/Admin/Home";
 
 var layout = "/admin";
 
 var routes = [
   {
     layout: layout,
-    path: "/landing",
-    name: "Deu bom",
+    path: "/home",
+    name: "Início",
     icon: "ni ni-tv-2 text-primary",
-    component: Landing,
+    component: Home,
   },
 ];
 export default routes;
