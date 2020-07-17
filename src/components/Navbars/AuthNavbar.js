@@ -13,7 +13,10 @@
 =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
+<i className="ni ni-planet" />
+<i className="ni ni-circle-08" />
+<i className="ni ni-key-25" />
+<i className="ni ni-single-02" />
 */
 import React from "react";
 import { Link } from "react-router-dom";
@@ -69,8 +72,7 @@ class AdminNavbar extends React.Component {
               </div>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink className="nav-link-icon" to="/" tag={Link}>
-                    <i className="ni ni-planet" />
+                  <NavLink className="nav-link-icon" to="/" tag={Link}>                    
                     <span className="nav-link-inner--text">Dashboard</span>
                   </NavLink>
                 </NavItem>
@@ -79,8 +81,7 @@ class AdminNavbar extends React.Component {
                     className="nav-link-icon"
                     to="/auth/register"
                     tag={Link}
-                  >
-                    <i className="ni ni-circle-08" />
+                  >                    
                     <span className="nav-link-inner--text">Register</span>
                   </NavLink>
                 </NavItem>
@@ -89,8 +90,7 @@ class AdminNavbar extends React.Component {
                     className="nav-link-icon"
                     to="/auth/login"
                     tag={Link}
-                  >
-                    <i className="ni ni-key-25" />
+                  >                    
                     <span className="nav-link-inner--text">Login</span>
                   </NavLink>
                 </NavItem>
@@ -99,8 +99,7 @@ class AdminNavbar extends React.Component {
                     className="nav-link-icon"
                     to="/admin/user-profile"
                     tag={Link}
-                  >
-                    <i className="ni ni-single-02" />
+                  >                    
                     <span className="nav-link-inner--text">Profile</span>
                   </NavLink>
                 </NavItem>

@@ -1,0 +1,32 @@
+h1, h2, h3, h4, h5, h6 {
+    color: black;
+}
+p {
+    color: #2a2a2a;
+}
+th, td {
+    padding: 5px;
+}
+.exercise-page {
+    z-index: 100;
+    text-align: center;
+    width: 100%;
+}
+
+.title {
+    text-align: left;
+}
+
+.left-title {
+    width: 50%;
+}
+
+.content {
+    padding-top: 10px;
+}
+
+.tabela {
+    width: 100%;
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
