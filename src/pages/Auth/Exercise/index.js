@@ -7,23 +7,96 @@ class Exercise extends React.Component {
   <>
     <div className="exercise-page">
       <div className="title">
-        <h1 className="left-title">EXERCÍCIOS</h1>
+        <h1 className="left-title" >EXERCÍCIOS</h1>      
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
           <i className ="ni ni-fat-add" /> Cadastrar novo exercício
-        </button>
+        </button>  
       </div>
       <div className="content">
-        <table className="tabela">
+        <table className="tabela" id="tablehead">
           <tr>
             <th>Editar</th>
             <th>Exercício</th>
             <th>Vídeo</th>
-            <th>Deletar</th>
+            <th>Remover</th>
+          </tr>
+          <tr>
+            <td><i className="ni ni-ruler-pencil"/></td>
+            <td>Alongamento</td>
+            <td>www.youtube.com/alongamento</td>
+            <td><i className="ni ni-fat-remove"/></td>
           </tr>
           <tr>
             <td><i className="ni ni-ruler-pencil"/></td>
             <td>Agachamento</td>
-            <td>www.youtube.com</td>
+            <td>www.youtube.com/agachamento</td>
+            <td><i className="ni ni-fat-remove"/></td>
+          </tr>
+          <tr>
+            <td><i className="ni ni-ruler-pencil"/></td>
+            <td>Abdominal</td>
+            <td>www.youtube.com/abdominal</td>
+            <td><i className="ni ni-fat-remove"/></td>
+          </tr>
+          <tr>
+            <td><i className="ni ni-ruler-pencil"/></td>
+            <td>Levantamento lateral</td>
+            <td>www.youtube.com/levantamentolateral</td>
+            <td><i className="ni ni-fat-remove"/></td>
+          </tr>
+        </table>
+      </div>
+      <div className="title">
+        <h1 className="left-title">CIRCUITOS</h1>      
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          <i className ="ni ni-fat-add" /> Criar novo circuito
+        </button>  
+      </div>
+      <div className="content">
+        <table className="tabela" id="tablehead">
+          <tr>
+            <th>Editar</th>
+            <th>Exercício</th>            
+            <th>Repetiçoes</th>
+            <th>Carga</th>
+            <th>Observação</th>
+            <th>Vídeo</th>
+            <th>Remover</th>
+          </tr>
+          <tr>
+            <td><i className="ni ni-ruler-pencil"/></td>
+            <td>Alongamento</td>
+            <td></td>
+            <td></td>
+            <td></td>                    
+            <td>www.youtube.com/alongamento</td>
+            <td><i className="ni ni-fat-remove"/></td>
+          </tr>
+          <tr>
+            <td><i className="ni ni-ruler-pencil"/></td>
+            <td>Agachamento</td>
+            <td>3x</td>
+            <td>2k</td>
+            <td>não flexionar muito os joelhos</td>
+            <td>www.youtube.com/agachamento</td>
+            <td><i className="ni ni-fat-remove"/></td>
+          </tr>
+          <tr>
+            <td><i className="ni ni-ruler-pencil"/></td>
+            <td>Abdominal</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>www.youtube.com/abdominal</td>
+            <td><i className="ni ni-fat-remove"/></td>
+          </tr>
+          <tr>
+            <td><i className="ni ni-ruler-pencil"/></td>
+            <td>Levantamento lateral</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>www.youtube.com/levantamentolateral</td>
             <td><i className="ni ni-fat-remove"/></td>
           </tr>
         </table>
