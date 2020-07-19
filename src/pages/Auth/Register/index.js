@@ -18,6 +18,11 @@ import {
 
 
 class Register extends React.Component {
+  cadastrar = (e) => {
+    window.alert(e.target.FormGroup)
+    e.preventDefault();
+  }
+
   render() {
     return (
       <div className="Register">
@@ -32,7 +37,7 @@ class Register extends React.Component {
               {/*  name, email, password, birthdate, sex, phones(type, number), city, state */}
 
 
-              <Form role="form">
+              <Form role="form" onSubmit={e => this.cadastrar(e)}>
                 <FormGroup>
                   <label className="form-control-label" htmlFor="input-country">
                     Nome
@@ -265,7 +270,7 @@ class Register extends React.Component {
                   </Col>
                 </Row>
                 <div className="text-center">
-                  <Button className="mt-4" color="primary" type="button">
+                  <Button className="mt-4" color="primary" type="submit">
                     Criar conta
                   </Button>
                 </div>
