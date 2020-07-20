@@ -1,19 +1,34 @@
-import Index from "../pages/Auth/Index";
 import Register from "../pages/Auth/Register";
+import Landing from "../pages/Auth/Landing";
+import Login from "../pages/Auth/Login";
 
+var layout = "/auth";
 
 var routes = [
-    {
-      path: "/index",
-      name: "Deu bom",
-      icon: "ni ni-tv-2 text-primary",
-      component: Index,
-    },
-    {
-      path: "/register",
-      name: "Register",
-      icon: "ni ni-tv-2 text-primary",
-      component: Register,
-    }
-  ];
-  export default routes;
+  {
+    path: "/landing",
+    name: "Início",
+    title: "Boas vindas | Treino para todos",
+    layout: layout,
+    icon: "ni ni-tv-2 text-primary",
+    component: Landing,
+  },
+  {
+    path: "/login",
+    name: "Entrar",
+    title: "Login | Treino para todos",
+    layout: layout,
+    icon: "ni ni-key-25 text-primary",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    title: "Cadastro | Treino para todos",
+    layout: layout,
+    icon: "ni ni-tv-2 text-primary",
+    component: Register,
+  }
+];
+
+export default routes;

@@ -32,12 +32,17 @@ class Admin extends React.Component {
     document.scrollingElement.scrollTop = 0;
     this.refs.mainContent.scrollTop = 0;
   }
+  renderPage = (props, prop) => {
+    props.title = prop.title;
+    return (<prop.component {...props} />);
+  }
+
   getRoutes = routes => {
     return routes.map((prop, key) => {
         return (
           <Route
-            path={`/admin${prop.path}`}
-            component={prop.component}
+            path={ prop.layout + prop.path }
+            render={props => this.renderPage(props, prop)}
             key={key}
           />
         );
@@ -64,7 +69,7 @@ class Admin extends React.Component {
           {...this.props}
           routes={routes}
           logo={{
-            innerLink: "/admin/index",
+            innerLink: "/admin/home",
             imgSrc: require("assets/img/brand/argon-react.png"),
             imgAlt: "..."
           }}

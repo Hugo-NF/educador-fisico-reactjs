@@ -33,12 +33,17 @@ class Auth extends React.Component {
   componentWillUnmount() {
     document.body.classList.remove("bg-default");
   }
+  renderPage = (props, prop) => {
+    props.title = prop.title;
+    return (<prop.component {...props} />);
+  }
+
   getRoutes = routes => {
     return routes.map((prop, key) => {
       return (
         <Route
-          path={`/auth${prop.path}`}
-          component={prop.component}
+          path={prop.layout + prop.path}
+          render={props => this.renderPage(props, prop)}
           key={key}
         />
       );
@@ -49,16 +54,15 @@ class Auth extends React.Component {
       <>
         <div className="main-content">
           <AuthNavbar />
-          <div className="header bg-gradient-info py-7 py-lg-8">
+          <div className="header bg-gradient-indigo py-7">
             <Container>
-              <div className="header-body text-center mb-7">
+              <div className="header-body text-center">
                 <Row className="justify-content-center">
                   <Col lg="5" md="6">
-                    <h1 className="text-white">Welcome!</h1>
-                    <p className="text-lead text-light">
-                      Use these awesome forms to login or create new account in
-                      your project for free.
-                    </p>
+                    <h1 className="text-white">Projeto EDUcador!</h1>
+                    <h3 className="text-lead text-light">
+                      Treino sem sair de casa
+                    </h3>
                   </Col>
                 </Row>
               </div>
@@ -80,7 +84,7 @@ class Auth extends React.Component {
             </div>
           </div>
           {/* Page content */}
-          <Container className="mt--8 pb-5">
+          <Container className="mt-7 pb-5">
             <Row className="justify-content-center">
               <Switch>
                 {this.getRoutes(routes)}
