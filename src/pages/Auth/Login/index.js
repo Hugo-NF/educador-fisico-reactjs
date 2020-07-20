@@ -10,15 +10,15 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Col,
   Collapse,
-  FormGroup,
   Form,
+  FormGroup,
   Input,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
-  Col
+  Row
 } from "reactstrap";
 
 class Login extends React.Component {
@@ -29,7 +29,12 @@ class Login extends React.Component {
       email: "",
       password: "",
       rememberMe: false,
-      recoverEmail: ""
+      recoverEmail: "",
+
+      // Validation states
+      emailError: "",
+      passwordError: "",
+      recoverEmailError: ""
     }
     window.document.title = this.props.title;
   }
@@ -40,17 +45,54 @@ class Login extends React.Component {
   handleLogin = async (event) => {
     event.preventDefault();
     
-    const response = await api.post('/users/login', {
+    await api.post('/users/login', {
       email: this.state.email,
       password: this.state.password
+    })
+    .then((response) => {
+      console.log(response.status);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      switch(error.response.status) {
+        case 400:
+          const fields =  error.response.data.validation.keys;
+          const errors = {
+            emailError: fields.includes('email')? "O campo deve ser um e-mail válido": "",
+            passwordError: fields.includes('password')? "A senha deve conter pelo menos 8 caracteres" : ""
+          }
+          this.setState(errors);
+          break;
+        default:
+        case 500:
+          break;
+      }
     });
   }
 
   handlePasswordRecover = async (event) => {
     event.preventDefault();
-    console.log(this.state.recoverEmail);
-
     
+    await api.post('/users/password/reset', {
+      email: this.state.recoverEmail
+    })
+    .then((response) => {
+
+    })
+    .catch((error) => {
+      switch(error.response.status) {
+        case 400:
+          const fields =  error.response.data.validation.keys;
+          const errors = {
+            recoverEmailError: fields.includes('email')? "O campo deve ser um e-mail válido": "",
+          }
+          this.setState(errors);
+          break;
+        default:
+        case 500:
+          break;
+      }
+    });
   }
 
   render() {
@@ -70,13 +112,14 @@ class Login extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input 
+                    <Input
                       placeholder="E-mail"
                       type="email" 
                       autoComplete="new-email"
                       onChange={(event) => this.setState({email: event.target.value})}
                     />
                   </InputGroup>
+                  <span className="error text-danger">{this.state.emailError}</span>
                 </FormGroup>
 
                 <FormGroup>
@@ -86,13 +129,14 @@ class Login extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input 
+                    <Input
                       placeholder="Senha"
                       type="password"
                       autoComplete="new-password"
                       onChange={(event) => this.setState({ password: event.target.value })}
                     />
                   </InputGroup>
+                  <span className="error text-danger">{this.state.passwordError}</span>
                 </FormGroup>
 
                 <div className="custom-control custom-control-alternative custom-checkbox">
@@ -122,7 +166,7 @@ class Login extends React.Component {
                 <Col>
                   <div className="d-flex justify-content-center">
                     <Button className="btn-outline-tertiary" onClick={this.toogle} style={{ marginBottom: '1rem' }}>Esqueci minha senha</Button>
-                    <Button className="btn-outline-tertiary" style={{ marginBottom: '1rem' }}>Cadastre-se</Button>
+                    <Button type="button" href="/auth/register" className="btn-outline-tertiary" style={{ marginBottom: '1rem' }}>Cadastre-se</Button>
                   </div>
                   <Collapse isOpen={this.state.isOpen}>
                     <Form onSubmit={this.handlePasswordRecover}>
@@ -139,8 +183,10 @@ class Login extends React.Component {
                             autoComplete="new-email"
                             onChange={(event) => this.setState({ recoverEmail: event.target.value })}
                           />
+
                           <Button className="btn btn-tertiary ml-2" type="submit"><i className="fas fa-paper-plane"></i></Button>
                         </InputGroup>
+                        <span className="error text-danger">{this.state.recoverEmailError}</span>
                       </FormGroup>
                     </Form>
                   </Collapse>
