@@ -1,5 +1,8 @@
-import React from "react";
+// Styles
 import './style.scss';
+
+import React from "react";
+import api from "../../../services/api";
 
 // reactstrap components
 import {
@@ -22,13 +25,33 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      email: "",
+      password: "",
+      rememberMe: false,
+      recoverEmail: ""
     }
     window.document.title = this.props.title;
   }
 
   // Password recovery collapsable
   toogle = () => this.setState({isOpen: !this.state.isOpen}); 
+
+  handleLogin = async (event) => {
+    event.preventDefault();
+    
+    const response = await api.post('/users/login', {
+      email: this.state.email,
+      password: this.state.password
+    });
+  }
+
+  handlePasswordRecover = async (event) => {
+    event.preventDefault();
+    console.log(this.state.recoverEmail);
+
+    
+  }
 
   render() {
     return (
@@ -39,7 +62,7 @@ class Login extends React.Component {
               <div className="text-center text-bold mb-4">
                 <span className="text-gray">Bem vindo de volta, digite suas credenciais</span>
               </div>
-              <Form role="form">
+              <Form role="form" onSubmit={ this.handleLogin }>
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
@@ -47,9 +70,15 @@ class Login extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="E-mail" type="email" autoComplete="new-email"/>
+                    <Input 
+                      placeholder="E-mail"
+                      type="email" 
+                      autoComplete="new-email"
+                      onChange={(event) => this.setState({email: event.target.value})}
+                    />
                   </InputGroup>
                 </FormGroup>
+
                 <FormGroup>
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
@@ -57,14 +86,21 @@ class Login extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Senha" type="password" autoComplete="new-password"/>
+                    <Input 
+                      placeholder="Senha"
+                      type="password"
+                      autoComplete="new-password"
+                      onChange={(event) => this.setState({ password: event.target.value })}
+                    />
                   </InputGroup>
                 </FormGroup>
+
                 <div className="custom-control custom-control-alternative custom-checkbox">
                   <input
                     className="custom-control-input"
                     id=" customCheckLogin"
                     type="checkbox"
+                    onChange={(event) => this.setState({ rememberMe: event.target.checked })}
                   />
                   <label
                     className="custom-control-label"
@@ -73,8 +109,9 @@ class Login extends React.Component {
                     <span className="text-muted">Manter conectado</span>
                   </label>
                 </div>
+
                 <div className="text-center">
-                  <Button className="my-4" color="primary" type="button">
+                  <Button className="my-4" color="primary" type="submit">
                     Entrar
                   </Button>
                 </div>
@@ -88,23 +125,24 @@ class Login extends React.Component {
                     <Button className="btn-outline-tertiary" style={{ marginBottom: '1rem' }}>Cadastre-se</Button>
                   </div>
                   <Collapse isOpen={this.state.isOpen}>
-                    <Card>
-                      <CardBody>
-                        <Form inline>
-                          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <InputGroup className="input-group-alternative">
-                              <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                  <i className="ni ni-email-83" />
-                                </InputGroupText>
-                              </InputGroupAddon>
-                              <Input placeholder="E-mail" type="email" autoComplete="new-email"/>
-                            </InputGroup>
-                          </FormGroup>
-                          <Button>Submit</Button>
-                        </Form>
-                      </CardBody>
-                    </Card>
+                    <Form onSubmit={this.handlePasswordRecover}>
+                      <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input 
+                            placeholder="E-mail"
+                            type="email"
+                            autoComplete="new-email"
+                            onChange={(event) => this.setState({ recoverEmail: event.target.value })}
+                          />
+                          <Button className="btn btn-tertiary ml-2" type="submit"><i className="fas fa-paper-plane"></i></Button>
+                        </InputGroup>
+                      </FormGroup>
+                    </Form>
                   </Collapse>
                 </Col>
               </Row>
