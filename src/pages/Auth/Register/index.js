@@ -18,8 +18,24 @@ import {
 
 
 class Register extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      name : "",
+      email : "",
+      password : "",
+      birthdate : new Date(),
+      sex : "",
+      phoneType: "", 
+      phoneNumber : "",
+      city : "",
+      state : "",
+      checked: false
+    };
+  }
+
   cadastrar = (e) => {
-    window.alert(e.target.FormGroup)
+
     e.preventDefault();
   }
 
@@ -34,10 +50,10 @@ class Register extends React.Component {
                 <small> Preencha os campos necessários</small>
               </div>
 
-              {/*  name, email, password, birthdate, sex, phones(type, number), city, state */}
+              {/*  name, email, password, birthdate, sex, phones[type, number], city, state */}
 
 
-              <Form role="form" onSubmit={e => this.cadastrar(e)}>
+              <Form role="form" onSubmit={event => this.cadastrar(event)}>
                 <FormGroup>
                   <label className="form-control-label" htmlFor="input-country">
                     Nome
@@ -48,7 +64,7 @@ class Register extends React.Component {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Nome" type="text" />
+                    <Input placeholder="Nome" type="text" onChange={event => this.setState({name : event.target.value})}/>
                   </InputGroup>
                 </FormGroup>
                 
@@ -62,7 +78,7 @@ class Register extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" autoComplete="new-email"/>
+                    <Input placeholder="Email" type="email" autoComplete="new-email" onChange={event => this.setState({email : event.target.value})}/>
                   </InputGroup>
                 </FormGroup>
                 
@@ -76,7 +92,7 @@ class Register extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Senha" type="password" autoComplete="new-password"/>
+                    <Input placeholder="Senha" type="password" autoComplete="new-password" onChange={event => this.setState({password : event.target.value})}/>
                   </InputGroup>
                 </FormGroup>
 
@@ -106,7 +122,7 @@ class Register extends React.Component {
                             <i className="ni ni-calendar-grid-58" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Birth" type="date"/>
+                        <Input placeholder="Birth" type="date" onChange={event => this.setState({birthdate : event.target.value})}/>
                       </InputGroup>
                     </FormGroup>
                   </Col>
@@ -122,7 +138,7 @@ class Register extends React.Component {
                             <i className="ni ni-single-02" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Gênero" type="select">
+                        <Input placeholder="Gênero" type="select" onChange={event => this.setState({sex : event.target.value})}>
                           <option hidden>Gênero</option> {/*Pode dar problema no futuro*/}
                           <option value="Male">Masculino</option>
                           <option value="Female">Feminino</option>
@@ -144,8 +160,7 @@ class Register extends React.Component {
                             <i className="ni ni-mobile-button" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="TelefoneType" type="select" >
-                          <option hidden></option>
+                        <Input placeholder="TelefoneType" type="select" onChange={event => this.setState({phoneType : event.target.value})}>
                           <option value="Mobile">Celular</option>
                           <option value="Home">Fixo</option>
                           <option value="Work">Comercial</option>
@@ -161,38 +176,7 @@ class Register extends React.Component {
                         Numero
                       </label>
                       <InputGroup className="input-group-alternative mb-3">
-                        <Input placeholder="Telefone" type="telephone"/>
-                      </InputGroup>
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="5" sm="5">
-                    <FormGroup>
-
-                      <InputGroup className="input-group-alternative mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-mobile-button" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input placeholder="TelefoneType" type="select" >
-                          <option hidden></option>
-                          <option value="Mobile">Celular</option>
-                          <option value="Home">Fixo</option>
-                          <option value="Work">Comercial</option>
-                          <option value="Other">Outro</option>
-                        </Input>
-                      </InputGroup>
-                    </FormGroup>
-                  </Col>
-
-                  <Col xs="7" sm="7">
-                    <FormGroup>
-
-                      <InputGroup className="input-group-alternative mb-3">
-                        <Input placeholder="Telefone" type="telephone"/>
+                        <Input placeholder="Telefone" type="telephone" onChange={event => this.setState({phoneNumber : event.target.value})}/>
                       </InputGroup>
                     </FormGroup>
                   </Col>
@@ -210,7 +194,7 @@ class Register extends React.Component {
                             <i className="ni ni-building" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Cidade" type="text"/>
+                        <Input placeholder="Cidade" type="text" onChange={event => this.setState({city : event.target.value})}/>
                       </InputGroup>
                     </FormGroup>
                   </Col>
@@ -225,7 +209,7 @@ class Register extends React.Component {
                             <i className="ni ni-square-pin" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Estado" type="select">
+                        <Input placeholder="Estado" type="select" onChange={event => this.setState({state : event.target.value})}>
                           <option hidden>Estado</option>
                           <option value="AC">AC</option> <option value="AL">AL</option> <option value="AP">AP</option>
                           <option value="AM">AM</option> <option value="BA">BA</option> <option value="CE">CE</option>
@@ -250,10 +234,11 @@ class Register extends React.Component {
                 <Row className="my-4">
                   <Col xs="12">
                     <div className="custom-control custom-control-alternative custom-checkbox">
-                      <input
+                      <input 
                         className="custom-control-input"
                         id="customCheckRegister"
                         type="checkbox"
+                        onChange={event => this.setState({checked : event.target.checked})}
                       />
                       <label
                         className="custom-control-label"
