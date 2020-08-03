@@ -2,6 +2,7 @@ import React from "react";
 
 import "./style.scss";
 import FormModal from "components/Modals/FormModal.js";
+import RemoveModal from "components/Modals/RemoveModal.js";
 
 class Exercise extends React.Component {
   render() {
@@ -23,25 +24,25 @@ class Exercise extends React.Component {
               <td><i className="ni ni-ruler-pencil"/></td>
               <td>Alongamento</td>
               <td>www.youtube.com/alongamento</td>
-              <td><i className="ni ni-fat-remove"/></td>
+              <td><RemoveModal mode="Remover"/></td>
             </tr>
             <tr>
               <td><i className="ni ni-ruler-pencil"/></td>
               <td>Agachamento</td>
               <td>www.youtube.com/agachamento</td>
-              <td><i className="ni ni-fat-remove"/></td>
+              <td><RemoveModal mode="Remover"/></td>
             </tr>
             <tr>
               <td><i className="ni ni-ruler-pencil"/></td>
               <td>Abdominal</td>
               <td>www.youtube.com/abdominal</td>
-              <td><i className="ni ni-fat-remove"/></td>
+              <td><RemoveModal mode="Remover"/></td>
             </tr>
             <tr>
               <td><i className="ni ni-ruler-pencil"/></td>
               <td>Levantamento lateral</td>
               <td>www.youtube.com/levantamentolateral</td>
-              <td><i className="ni ni-fat-remove"/></td>
+              <td><RemoveModal mode="Remover"/></td>
             </tr>
           </table>
         </div>
