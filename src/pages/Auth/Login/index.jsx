@@ -1,8 +1,7 @@
 // Styles
 import './style.scss';
 
-import React from "react";
-import api from "../../../services/api";
+import React from 'react';
 
 // reactstrap components
 import {
@@ -18,81 +17,88 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row
-} from "reactstrap";
+  Row,
+} from 'reactstrap';
+
+import PropTypes from 'prop-types';
+import api from '../../../services/api';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
-      email: "",
-      password: "",
-      rememberMe: false,
-      recoverEmail: "",
+      email: '',
+      password: '',
+      recoverEmail: '',
 
       // Validation states
-      emailError: "",
-      passwordError: "",
-      recoverEmailError: ""
-    }
-    window.document.title = this.props.title;
+      emailError: '',
+      passwordError: '',
+      recoverEmailError: '',
+    };
+
+    // Sets browser tab name
+    const { title } = this.props;
+    window.document.title = title;
   }
 
   // Password recovery collapsable
-  toogle = () => this.setState({isOpen: !this.state.isOpen}); 
+  toogle = async () => this.setState({ isOpen: !this.state.isOpen });
 
   handleLogin = async (event) => {
     event.preventDefault();
-    
+
     await api.post('/users/login', {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     })
-    .then((response) => {
-      console.log(response.status);
-      console.log(response.data);
-    })
-    .catch((error) => {
-      switch(error.response.status) {
-        case 400:
-          const fields =  error.response.data.validation.keys;
-          const errors = {
-            emailError: fields.includes('email')? "O campo deve ser um e-mail válido": "",
-            passwordError: fields.includes('password')? "A senha deve conter pelo menos 8 caracteres" : ""
+      .then((response) => {
+        console.log(response.status);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        switch (error.response.status) {
+          case 400: {
+            const fields = error.response.data.validation.keys;
+            const errors = {
+              emailError: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
+              passwordError: fields.includes('password') ? 'A senha deve conter pelo menos 8 caracteres' : '',
+            };
+            this.setState(errors);
+            break;
           }
-          this.setState(errors);
-          break;
-        default:
-        case 500:
-          break;
-      }
-    });
+          default:
+          case 500:
+            break;
+        }
+      });
   }
 
   handlePasswordRecover = async (event) => {
     event.preventDefault();
-    
-    await api.post('/users/password/reset', {
-      email: this.state.recoverEmail
-    })
-    .then((response) => {
+    const { recoverEmail } = this.state;
 
+    await api.post('/users/password/reset', {
+      email: recoverEmail,
     })
-    .catch((error) => {
-      switch(error.response.status) {
-        case 400:
-          const fields =  error.response.data.validation.keys;
-          const errors = {
-            recoverEmailError: fields.includes('email')? "O campo deve ser um e-mail válido": "",
-          }
-          this.setState(errors);
-          break;
-        default:
-        case 500:
-          break;
-      }
-    });
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        const fields = error.response.data.validation.keys;
+        const errors = {
+          recoverEmailError: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
+        };
+        switch (error.response.status) {
+          case 400:
+            this.setState(errors);
+            break;
+          default:
+          case 500:
+            break;
+        }
+      });
   }
 
   render() {
@@ -104,7 +110,7 @@ class Login extends React.Component {
               <div className="text-center text-bold mb-4">
                 <span className="text-gray">Bem vindo de volta, digite suas credenciais</span>
               </div>
-              <Form role="form" onSubmit={ this.handleLogin }>
+              <Form role="form" onSubmit={this.handleLogin}>
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
@@ -114,9 +120,9 @@ class Login extends React.Component {
                     </InputGroupAddon>
                     <Input
                       placeholder="E-mail"
-                      type="email" 
+                      type="email"
                       autoComplete="new-email"
-                      onChange={(event) => this.setState({email: event.target.value})}
+                      onChange={(event) => this.setState({ email: event.target.value })}
                     />
                   </InputGroup>
                   <span className="error text-danger">{this.state.emailError}</span>
@@ -140,18 +146,15 @@ class Login extends React.Component {
                 </FormGroup>
 
                 <div className="custom-control custom-control-alternative custom-checkbox">
-                  <input
-                    className="custom-control-input"
-                    id=" customCheckLogin"
-                    type="checkbox"
-                    onChange={(event) => this.setState({ rememberMe: event.target.checked })}
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor=" customCheckLogin"
-                  >
-                    <span className="text-muted">Manter conectado</span>
+                  <label className="custom-control-label" htmlFor="customCheckLogin">
+                    <input
+                      className="custom-control-input"
+                      id="customCheckLogin"
+                      type="checkbox"
+                      onChange={(event) => this.setState({ rememberMe: event.target.checked })}
+                    />
                   </label>
+                  <span className="text-muted">Manter conectado</span>
                 </div>
 
                 <div className="text-center">
@@ -177,14 +180,14 @@ class Login extends React.Component {
                               <i className="ni ni-email-83" />
                             </InputGroupText>
                           </InputGroupAddon>
-                          <Input 
+                          <Input
                             placeholder="E-mail"
                             type="email"
                             autoComplete="new-email"
                             onChange={(event) => this.setState({ recoverEmail: event.target.value })}
                           />
 
-                          <Button className="btn btn-tertiary ml-2" type="submit"><i className="fas fa-paper-plane"></i></Button>
+                          <Button className="btn btn-tertiary ml-2" type="submit"><i className="fas fa-paper-plane" /></Button>
                         </InputGroup>
                         <span className="error text-danger">{this.state.recoverEmailError}</span>
                       </FormGroup>
@@ -199,5 +202,10 @@ class Login extends React.Component {
     );
   }
 }
+
+// PropTypes for Login page
+Login.propTypes = {
+  title: PropTypes.string.isRequired,
+};
 
 export default Login;
