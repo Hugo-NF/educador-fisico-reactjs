@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hugo-NF/educador-fisico-reactjs.git"
+    "url": "https://github.com/Hugo-NF/educador-fisico-reactjs.git"
   },
   "keywords": [
     "react",
@@ -13,8 +13,7 @@
     "dashboard",
     "dashboard-react"
   ],
-  "author": "Creative Tim",
-  "homepage": "https://github.com/Hugo-NF/educador-fisico-reactjs",
+  "author": "Hugo-NF",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
