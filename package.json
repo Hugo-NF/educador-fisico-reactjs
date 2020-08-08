@@ -14,7 +14,6 @@
     "dashboard-react"
   ],
   "author": "Creative Tim",
-  "homepage": "https://github.com/Hugo-NF/educador-fisico-reactjs",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -54,8 +53,21 @@
     "@types/googlemaps": "3.39.2",
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "16.9.19",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "=6.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
+    "prettier": "^2.0.5",
     "typescript": "3.7.5"
   }
 }

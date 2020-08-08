@@ -1,25 +1,32 @@
 {
     "env": {
         "browser": true,
-        "es2020": true
+        "es6": true
     },
-    "parser": "babel-eslint",
     "extends": [
-        "react-app",
         "plugin:react/recommended",
         "airbnb"
     ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 11,
+        "ecmaVersion": 2018,
         "sourceType": "module"
     },
     "plugins": [
         "react"
     ],
     "rules": {
-        "max-len": "off"
+        "max-len" : "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "react/jsx-props-no-spreading": ["off", {
+            "custom": "ignore"
+        }]
     }
 }
