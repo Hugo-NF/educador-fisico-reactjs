@@ -1,15 +1,15 @@
-import React from "react";
-import "./style.scss";
+import React, { useEffect } from 'react';
+import './style.scss';
+import PropTypes from 'prop-types';
 
-class Landing extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    window.document.title = this.props.title;
-  }
-  
-  render() {
-    return (
+export default function Landing(props) {
+  useEffect(() => {
+    // Sets browser tab name
+    const { title } = props;
+    window.document.title = title;
+  });
+
+  return (
     <div className="landing-page">
       <div className="title">
         <h1>Treino para todos!</h1>
@@ -23,7 +23,7 @@ class Landing extends React.Component {
       </div>
 
       <div className="title">
-          <h1>Como participar!</h1>
+        <h1>Como participar!</h1>
       </div>
       <div className="content">
         <p>
@@ -44,7 +44,10 @@ class Landing extends React.Component {
         </p>
       </div>
     </div>
-    )
-  }
+  );
 }
-export default Landing;
+
+// PropTypes for Landing page
+Landing.propTypes = {
+  title: PropTypes.string.isRequired,
+};

@@ -1,14 +1,14 @@
-import Home from "../pages/Admin/Home";
+import Home from '../pages/Admin/Home';
 
-var layout = "/admin";
+const layout = '/admin';
 
-var routes = [
+const routes = [
   {
-    layout: layout,
-    path: "/home",
-    name: "Início",
-    title: "Dashboard | Treino para todos",
-    icon: "ni ni-tv-2 text-primary",
+    layout,
+    path: '/home',
+    name: 'Início',
+    title: 'Dashboard | Treino para todos',
+    icon: 'ni ni-tv-2 text-primary',
     component: Home,
   },
 ];
