@@ -1,16 +1,24 @@
-name: Lint
+name: CI
 
 on: pull_request
 
 jobs:
-  eslint:
+  ci:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: hallee/eslint-action@1.0.3
-        # GITHUB_TOKEN in forked repositories is read-only
-        # https://help.github.com/en/actions/reference/events-that-trigger-workflows#pull-request-event-pull_request
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }} 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
         with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
-          source-root: optional-sub-dir
+          node-version: 12
+
+      - name: Install dependencies and test
+        run: |
+          npm run install:clean
+          npm test --if-present
+    
+      - name: Check linting
+        run: npm run lint
