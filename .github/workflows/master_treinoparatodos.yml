@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - treineemcasa
+name: Build and deploy Node.js app to Azure Web App - treinoparatodos
 
 on:
   push:
@@ -22,14 +22,15 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-        npm install:clean
+        npm install -g react-scripts
+        npm run install:clean
         npm run build --if-present
         npm run test --if-present
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v1
       with:
-        app-name: 'treineemcasa'
+        app-name: 'treinoparatodos'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_fd5a233343d84a819288eff6b914ff14 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_aff75e05079e422eb4c2c478d8b6bdb3 }}
         package: .
