@@ -8,35 +8,29 @@ import {
   } from "reactstrap";
   
   class FormModal extends React.Component {
-    state = {
-      formModal: false
-    };
-    toggleModal = state => {
-      this.setState({
-        [state]: !this.state[state]
-      });
-    };
+    onClose() {
+      this.props.onClose();
+    }
     render() {
+      const nameExercise = this.props.name;
+      const linkExercise = this.props.link;
       return (
         <>
-          <Button type="button" color="primary" onClick={() => this.toggleModal("formModal")}>
-            <i className ="ni ni-fat-add" /> Cadastrar { this.props.model }
-          </Button>
           <Modal
             className="modal-dialog-centered"
-            isOpen={this.state.formModal}
-            toggle={() => this.toggleModal("formModal")}
+            isOpen={this.props.modalVisible}
+            toggle={() => this.onClose()}
           >
             <div className="modal-header">
               <h5 className="modal-title" id="formModalLabel">
-                Cadastro de exercício
+                Cadastro de { this.props.model }
               </h5>
               <button
                 aria-label="Close"
                 className="close"
                 data-dismiss="modal"
                 type="button"
-                onClick={() => this.toggleModal("formModal")}
+                onClick={() => this.onClose()}
               >
                 <span aria-hidden={true}>×</span>
               </button>
@@ -48,6 +42,7 @@ import {
                   type="name"
                   id="exerciseName"
                   placeholder="Escreva o nome do exercício ..."
+                  value={nameExercise}
                 />
                 <br/>
                 Vídeo de descrição
@@ -55,6 +50,7 @@ import {
                   type="text"
                   id="exerciseVideo"
                   placeholder="Link para o vídeo do YouTube"
+                  value={linkExercise}
                 />
               </Form>
             </div>
@@ -63,13 +59,13 @@ import {
                 color="secondary"
                 data-dismiss="modal"
                 type="button"
-                onClick={() => this.toggleModal("formModal")}
+                onClick={() => this.onClose()}
               >
                 Cancelar
               </Button>
               <Button
                 color="primary" type="button" 
-                onClick={() => this.toggleModal("formModal")}>
+                onClick={() => this.onClose()}>
                 Cadastrar { this.props.model }
               </Button>
             </div>
