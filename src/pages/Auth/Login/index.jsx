@@ -3,6 +3,7 @@ import './style.scss';
 
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 // reactstrap components
 import {
@@ -50,6 +51,9 @@ const Login = (props) => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    let redirect = false;
+    let target = '';
+
     setNetwork({ ...network, busy: true });
 
     await api.post('/users/login', {
@@ -64,6 +68,9 @@ const Login = (props) => {
         localStorage.setItem('name', data.name);
         localStorage.setItem('email', data.email);
         localStorage.setItem('role', data.roles[0]);
+
+        redirect = true;
+        target = '/admin/home';
       })
       .catch((error) => {
         console.log(error);
@@ -79,6 +86,27 @@ const Login = (props) => {
             break;
           }
           case 401: {
+            toast.error('E-mail ou senha incorretos', {
+              position: 'bottom-right',
+              autoClose: false,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+            });
+            break;
+          }
+          case 409: {
+            toast.error('E-mail ou senha incorretos', {
+              position: 'bottom-right',
+              autoClose: false,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+            });
             break;
           }
           default:
@@ -88,7 +116,7 @@ const Login = (props) => {
       });
     // setNetwork({ ...network, busy: false });
     setNetwork({
-      ...network, busy: false, redirect: true, target: '/admin/home',
+      ...network, busy: false, redirect, target,
     });
   };
 
@@ -133,6 +161,7 @@ const Login = (props) => {
 
   return (
     <>
+      <ToastContainer />
       <Col lg="5" md="7">
         <Card className="bg-secondary" id="login-card">
           <CardBody className="px-lg-5">
