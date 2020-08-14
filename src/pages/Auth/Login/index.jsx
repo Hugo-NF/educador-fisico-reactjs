@@ -251,7 +251,7 @@ const Login = (props) => {
                           onChange={(event) => setRecoverEmail(event.target.value)}
                         />
 
-                        <Button className="btn btn-tertiary ml-2" type="submit" disabled={network.busy}><i className="fas fa-paper-plane" /></Button>
+                        <Button className="ml-2" color="primary" type="submit" disabled={network.busy}><i className="fas fa-paper-plane" /></Button>
                       </InputGroup>
                       <span className="error text-danger">{errors.recoverEmail}</span>
                     </FormGroup>
