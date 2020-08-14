@@ -2,6 +2,7 @@
 import './style.scss';
 
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 // reactstrap components
 import {
@@ -23,15 +24,19 @@ import {
 import PropTypes from 'prop-types';
 import api from '../../../services/api';
 
-export default function Login(props) {
-  const [isOpen, toogle] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [remember, setRemember] = useState(true);
+const Login = (props) => {
+  // Collapsible is open Visual
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Axios api fetch and redirects
+  const [network, setNetwork] = useState({
+    busy: false, redirect: false, target: '',
+  });
+
+  // Page content
+  const [form, setForm] = useState({ email: '', password: '', remember: true });
+  const [errors, setErrors] = useState({ email: '', password: '', recoverEmail: '' });
   const [recoverEmail, setRecoverEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [recoverEmailError, setRecoverEmailError] = useState('');
 
   // Equivalent to ComponentDidMount
   useEffect(() => {
@@ -40,27 +45,40 @@ export default function Login(props) {
     window.document.title = title;
   });
 
+  // Change collapsible state
+  const toogle = () => setIsOpen(!isOpen);
+
   const handleLogin = async (event) => {
     event.preventDefault();
+    setNetwork({ ...network, busy: true });
 
     await api.post('/users/login', {
-      email,
-      password,
+      email: form.email,
+      password: form.password,
     })
       .then((response) => {
-        console.log(response.status);
-        console.log(response.data);
+        setNetwork({ ...network, busy: true });
+        const { data } = response.data;
+
+        localStorage.setItem('auth-token', data['auth-token']);
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('role', data.roles[0]);
       })
       .catch((error) => {
+        console.log(error);
+        setErrors({ email: '', password: '', recoverEmail: '' });
         switch (error.response.status) {
           case 400: {
             const fields = error.response.data.validation.keys;
-            const errors = {
-              emailError: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
-              passwordError: fields.includes('password') ? 'A senha deve conter pelo menos 8 caracteres' : '',
-            };
-            setEmailError(errors.emailError);
-            setPasswordError(errors.passwordError);
+            setErrors({
+              ...errors,
+              email: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
+              password: fields.includes('password') ? 'A senha deve conter pelo menos 8 caracteres' : '',
+            });
+            break;
+          }
+          case 401: {
             break;
           }
           default:
@@ -68,6 +86,10 @@ export default function Login(props) {
             break;
         }
       });
+    // setNetwork({ ...network, busy: false });
+    setNetwork({
+      ...network, busy: false, redirect: true, target: '/admin/home',
+    });
   };
 
   const handlePasswordRecover = async (event) => {
@@ -83,10 +105,10 @@ export default function Login(props) {
         switch (error.response.status) {
           case 400: {
             const fields = error.response.data.validation.keys;
-            const errors = {
-              recoverEmailError: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
-            };
-            setRecoverEmailError(errors.recoverEmailError);
+            setErrors({
+              ...errors,
+              recoverEmail: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
+            });
             break;
           }
           default:
@@ -95,6 +117,19 @@ export default function Login(props) {
         }
       });
   };
+
+  if (network.redirect) {
+    return (
+      <Redirect
+        push
+        to={{
+          pathname: network.target,
+          search: '',
+          state: { referrer: 'Login' },
+        }}
+      />
+    );
+  }
 
   return (
     <>
@@ -116,10 +151,11 @@ export default function Login(props) {
                     placeholder="E-mail"
                     type="email"
                     autoComplete="new-email"
-                    onChange={(event) => setEmail(event.target.value)}
+                    value={form.email}
+                    onChange={(event) => setForm({ ...form, email: event.target.value })}
                   />
                 </InputGroup>
-                <span className="error text-danger">{emailError}</span>
+                <span className="error text-danger">{errors.email}</span>
               </FormGroup>
 
               <FormGroup>
@@ -133,10 +169,11 @@ export default function Login(props) {
                     placeholder="Senha"
                     type="password"
                     autoComplete="new-password"
-                    onChange={(event) => setPassword(event.target.value)}
+                    value={form.password}
+                    onChange={(event) => setForm({ ...form, password: event.target.value })}
                   />
                 </InputGroup>
-                <span className="error text-danger">{passwordError}</span>
+                <span className="error text-danger">{errors.password}</span>
               </FormGroup>
 
               <div className="custom-control custom-control-alternative custom-checkbox">
@@ -144,8 +181,8 @@ export default function Login(props) {
                   className="custom-control-input"
                   id="customCheckLogin"
                   type="checkbox"
-                  onChange={(event) => setRemember(event.target.checked)}
-                  checked={remember}
+                  onChange={(event) => setForm({ ...form, remember: event.target.checked })}
+                  checked={form.remember}
                 />
                 <label
                   className="custom-control-label"
@@ -156,7 +193,7 @@ export default function Login(props) {
               </div>
 
               <div className="text-center">
-                <Button className="my-4" color="primary" type="submit">
+                <Button className="my-4" color="primary" type="submit" disabled={network.busy}>
                   Entrar
                 </Button>
               </div>
@@ -185,9 +222,9 @@ export default function Login(props) {
                           onChange={(event) => setRecoverEmail(event.target.value)}
                         />
 
-                        <Button className="btn btn-tertiary ml-2" type="submit"><i className="fas fa-paper-plane" /></Button>
+                        <Button className="btn btn-tertiary ml-2" type="submit" disabled={network.busy}><i className="fas fa-paper-plane" /></Button>
                       </InputGroup>
-                      <span className="error text-danger">{recoverEmailError}</span>
+                      <span className="error text-danger">{errors.recoverEmail}</span>
                     </FormGroup>
                   </Form>
                 </Collapse>
@@ -198,9 +235,11 @@ export default function Login(props) {
       </Col>
     </>
   );
-}
+};
 
 // PropTypes for Login page
 Login.propTypes = {
   title: PropTypes.string.isRequired,
 };
+
+export default Login;
