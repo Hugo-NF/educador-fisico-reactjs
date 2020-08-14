@@ -23,6 +23,7 @@ import {
 } from 'reactstrap';
 
 import PropTypes from 'prop-types';
+import notifyRedirect from '../../../components/Notifications/Redirect';
 import api from '../../../services/api';
 
 const Login = (props) => {
@@ -44,6 +45,8 @@ const Login = (props) => {
     // Sets browser tab name
     const { title } = props;
     window.document.title = title;
+
+    notifyRedirect(props);
   });
 
   // Change collapsible state
@@ -98,7 +101,7 @@ const Login = (props) => {
             break;
           }
           case 409: {
-            toast.error('E-mail ou senha incorretos', {
+            toast.error('E-mail não cadastrado', {
               position: 'bottom-right',
               autoClose: false,
               hideProgressBar: true,
