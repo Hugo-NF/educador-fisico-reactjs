@@ -1,9 +1,8 @@
-// Styles
-import './style.scss';
-
+// React Modules
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 // reactstrap components
 import {
@@ -22,9 +21,17 @@ import {
   Row,
 } from 'reactstrap';
 
-import PropTypes from 'prop-types';
+// Custom components
 import notifyRedirect from '../../../components/Notifications/Redirect';
+
+// App constants
+import { ErrorCodes } from '../../../constants';
+
+// Api service
 import api from '../../../services/api';
+
+// Styles
+import './style.scss';
 
 const Login = (props) => {
   // Collapsible is open Visual
@@ -32,12 +39,16 @@ const Login = (props) => {
 
   // Axios api fetch and redirects
   const [network, setNetwork] = useState({
-    busy: false, redirect: false, target: '',
+    busy: false, redirect: false, target: '', query: '', state: { referrer: 'Login' },
   });
 
   // Page content
-  const [form, setForm] = useState({ email: '', password: '', remember: true });
-  const [errors, setErrors] = useState({ email: '', password: '', recoverEmail: '' });
+  const [form, setForm] = useState({
+    email: '', password: '', remember: true,
+  });
+  const [errors, setErrors] = useState({
+    email: '', password: '', recoverEmail: '',
+  });
   const [recoverEmail, setRecoverEmail] = useState('');
 
   // Equivalent to ComponentDidMount
@@ -46,8 +57,9 @@ const Login = (props) => {
     const { title } = props;
     window.document.title = title;
 
+    // Displays on screen any notification incoming from redirects
     notifyRedirect(props);
-  });
+  }, []);
 
   // Change collapsible state
   const toogle = () => setIsOpen(!isOpen);
@@ -56,6 +68,7 @@ const Login = (props) => {
     event.preventDefault();
     let redirect = false;
     let target = '';
+    let state = { referrer: 'Login' };
 
     setNetwork({ ...network, busy: true });
 
@@ -64,62 +77,119 @@ const Login = (props) => {
       password: form.password,
     })
       .then((response) => {
-        setNetwork({ ...network, busy: true });
+        // Login successful
         const { data } = response.data;
 
-        localStorage.setItem('auth-token', data['auth-token']);
+        localStorage.setItem('authToken', data.authToken);
         localStorage.setItem('name', data.name);
         localStorage.setItem('email', data.email);
-        localStorage.setItem('role', data.roles[0]);
+        localStorage.setItem('layout', data.layout);
 
         redirect = true;
-        target = '/admin/home';
+        target = `/${data.layout}/home`;
+        state = {
+          ...state,
+          notifications: [
+            {
+              type: 'success', icon: 'ni ni-bell-55', title: 'Login autorizado', text: `Bem-vindo de volta, ${data.name}`,
+            },
+          ],
+        };
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((exception) => {
+        // Clears any previous errors
         setErrors({ email: '', password: '', recoverEmail: '' });
-        switch (error.response.status) {
-          case 400: {
-            const fields = error.response.data.validation.keys;
-            setErrors({
-              ...errors,
-              email: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
-              password: fields.includes('password') ? 'A senha deve conter pelo menos 8 caracteres' : '',
-            });
-            break;
+        try {
+          const { status, data } = exception.response;
+
+          switch (status) {
+            case 400: {
+              const fields = data.validation.keys;
+              setErrors({
+                ...errors,
+                email: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
+                password: fields.includes('password') ? 'A senha deve conter pelo menos 8 caracteres' : '',
+              });
+              break;
+            }
+            case 401:
+              switch (data.errorCode) {
+                case ErrorCodes.ACCOUNT_LOCK_OUT:
+                  toast.error(`A sua conta está bloqueada (${data.error.lockoutReason}). Acesse o suporte para mais informações`, {
+                    position: 'top-right',
+                    autoClose: false,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                  });
+                  break;
+                case ErrorCodes.ACCESS_FAILED_LIMIT_REACHED:
+                  toast.error('Você errou a senha demais! Sua conta foi bloqueada até que você inicie uma verificação de conta', {
+                    position: 'top-right',
+                    autoClose: false,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                  });
+                  break;
+                case ErrorCodes.WRONG_PASSWORD:
+                  toast.warning('Credenciais incorretas. Errar por 10 vezes seguidas causa o bloqueio da conta', {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                  });
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case 409:
+              toast.warning('E-mail não cadastrado', {
+                position: 'top-right',
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+              });
+              break;
+            default:
+            case 500:
+              toast.error('Login indisponível. Talvez isso seja um problema do lado de cá, caso o problema persista, procure o suporte.', {
+                position: 'top-right',
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+              });
+              break;
           }
-          case 401: {
-            toast.error('E-mail ou senha incorretos', {
-              position: 'bottom-right',
-              autoClose: false,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-            });
-            break;
-          }
-          case 409: {
-            toast.error('E-mail não cadastrado', {
-              position: 'bottom-right',
-              autoClose: false,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-            });
-            break;
-          }
-          default:
-          case 500:
-            break;
+        } catch (exc) {
+          toast.error(`Os nossos servidores não estão disponíveis no momento. Caso o problema persista, procure o suporte. Detalhes: ${exc}`, {
+            position: 'top-right',
+            autoClose: false,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+          });
         }
       });
-    // setNetwork({ ...network, busy: false });
+
     setNetwork({
-      ...network, busy: false, redirect, target,
+      ...network, busy: false, redirect, target, state,
     });
   };
 
@@ -129,22 +199,88 @@ const Login = (props) => {
     await api.post('/users/password/reset', {
       email: recoverEmail,
     })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        toast.success(`E-mail enviado com sucesso para ${recoverEmail}. Abra-o e siga as instruções para recuperação de senha`, {
+          position: 'top-right',
+          autoClose: false,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
+        setRecoverEmail('');
+        setIsOpen(false);
       })
       .catch((error) => {
-        switch (error.response.status) {
-          case 400: {
-            const fields = error.response.data.validation.keys;
-            setErrors({
-              ...errors,
-              recoverEmail: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
-            });
-            break;
+        try {
+          setErrors({ email: '', password: '', recoverEmail: '' });
+          const { status, data } = error.response;
+          switch (status) {
+            case 400: {
+              const fields = data.validation.keys;
+              setErrors({
+                ...errors,
+                recoverEmail: fields.includes('email') ? 'O campo deve ser um e-mail válido' : '',
+              });
+              break;
+            }
+            case 401:
+              toast.error('A sua conta está bloqueada, não é possível recuperar senha. Acesse o suporte para mais informações', {
+                position: 'top-right',
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+              });
+              break;
+            case 409:
+              toast.error(`E-mail ${recoverEmail} não cadastrado`, {
+                position: 'top-right',
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+              });
+              break;
+            default:
+            case 500:
+              toast.error('Erro ao enviar e-mail. Talvez isso seja um problema do lado de cá, caso o problema persista, procure o suporte.', {
+                position: 'top-right',
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+              });
+              break;
+            case 503:
+              toast.error('Serviço de e-mail indisponível. Tente novamente mais tarde. Caso o problema persista, procure o suporte.', {
+                position: 'top-right',
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+              });
+              break;
           }
-          default:
-          case 500:
-            break;
+        } catch (exc) {
+          toast.error(`Os nossos servidores não estão disponíveis no momento. Caso o problema persista, procure o suporte. Detalhes: ${exc}`, {
+            position: 'top-right',
+            autoClose: false,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+          });
         }
       });
   };
@@ -155,8 +291,8 @@ const Login = (props) => {
         push
         to={{
           pathname: network.target,
-          search: '',
-          state: { referrer: 'Login' },
+          search: network.query,
+          state: network.state,
         }}
       />
     );
