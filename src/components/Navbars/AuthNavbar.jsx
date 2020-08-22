@@ -23,7 +23,7 @@ export default function AdminNavbar() {
     >
       <Container className="px-4">
         <NavbarBrand to="/" tag={Link}>
-          <img alt="..." src={Images.ArgonWhiteLogo} />
+          <img alt="..." src={Images.LogoBranca330px} style={{ width: 140, height: 140 }} />
         </NavbarBrand>
         <button className="navbar-toggler" id="navbar-collapse-main" type="submit">
           <span className="navbar-toggler-icon" />
@@ -54,7 +54,11 @@ export default function AdminNavbar() {
           <Nav className="ml-auto" navbar>
             <NavItem>
               <NavLink className="nav-link-icon" to="/" tag={Link}>
-                <i className="ni ni-planet" />
+                <span className="nav-link-inner--text">Início</span>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="nav-link-icon" to="/" tag={Link}>
                 <span className="nav-link-inner--text">Dashboard</span>
               </NavLink>
             </NavItem>
@@ -64,7 +68,6 @@ export default function AdminNavbar() {
                 to="/auth/register"
                 tag={Link}
               >
-                <i className="ni ni-circle-08" />
                 <span className="nav-link-inner--text">Register</span>
               </NavLink>
             </NavItem>
@@ -74,7 +77,6 @@ export default function AdminNavbar() {
                 to="/auth/login"
                 tag={Link}
               >
-                <i className="ni ni-key-25" />
                 <span className="nav-link-inner--text">Login</span>
               </NavLink>
             </NavItem>
@@ -84,8 +86,7 @@ export default function AdminNavbar() {
                 to="/admin/user-profile"
                 tag={Link}
               >
-                <i className="ni ni-single-02" />
-                <span className="nav-link-inner--text">Profile</span>
+                <span className="nav-link-inner--text">Perfil</span>
               </NavLink>
             </NavItem>
           </Nav>

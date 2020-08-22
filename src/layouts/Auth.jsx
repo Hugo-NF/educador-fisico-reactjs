@@ -40,10 +40,7 @@ export default function Auth() {
             <div className="header-body text-center">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Projeto EDUcador!</h1>
-                  <h3 className="text-lead text-light">
-                    Treino sem sair de casa
-                  </h3>
+                  <h3 className="text-white">No seu tempo. Em qualquer lugar.</h3>                  
                 </Col>
               </Row>
             </div>
