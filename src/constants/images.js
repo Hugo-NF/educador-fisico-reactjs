@@ -6,6 +6,7 @@ const ProfileBackground = require('../assets/img/theme/profile-cover.jpg');
 const ArgonLogo = require('../assets/img/brand/argon-react.png');
 const ArgonWhiteLogo = require('../assets/img/brand/argon-react-white.png');
 const LogoBranca330px = require('../assets/img/icons/logo-completa-branco-330px.png');
+const LogoRoxo330px = require('../assets/img/icons/logo-completa-roxo-330px.png');
 
 const Alongando = require('../assets/img/landingPage/alongando.jpg');
 const Abdominal = require('../assets/img/landingPage/abdominal.jpg');
@@ -18,6 +19,7 @@ export default {
   ArgonLogo,
   ArgonWhiteLogo,
   LogoBranca330px,
+  LogoRoxo330px,
   Alongando,
   Abdominal,
   Afundo,

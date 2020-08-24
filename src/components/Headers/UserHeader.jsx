@@ -25,17 +25,17 @@ export default function UserHeader() {
       <Container className="d-flex align-items-center" fluid>
         <Row>
           <Col lg="7" md="10">
-            <h1 className="display-2 text-white">Hello Jesse</h1>
+            <h1 className="display-2 text-white">Olá Jesse!</h1>
             <p className="text-white mt-0 mb-5">
-              Essa é a sua pagina de perfil. Aqui você pode ver seus progressos 
-              ao longo do tempo.
+              Bem vindo(a) a sua página de perfil. Aqui você pode ver seus
+              progressos ao longo do tempo e atualizar suas informações quando quiser.
             </p>
             <Button
               color="info"
               href="#pablo"
               onClick={(e) => e.preventDefault()}
             >
-              Edit profile
+              Editar perfil
             </Button>
           </Col>
         </Row>

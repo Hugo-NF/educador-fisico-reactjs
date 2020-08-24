@@ -50,8 +50,8 @@ export default function Admin(props) {
         routes={routes}
         logo={{
           innerLink: '/admin/home',
-          imgSrc: Images.ArgonLogo,
-          imgAlt: 'Brand Logo',
+          imgSrc: Images.LogoRoxo330px,
+          imgAlt: 'Logo Roxo',
         }}
       />
       <div className="main-content">
