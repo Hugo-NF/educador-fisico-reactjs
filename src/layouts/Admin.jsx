@@ -22,11 +22,11 @@ export default function Admin(props) {
     return (<prop.component {...props} />);
   };
 
-  const getRoutes = () => routes.map((route) => (
+  const getRoutes = () => routes.map((prop, key) => (
     <Route
-      path={route.layout + route.path}
-      render={(props) => renderPage(props, route)}
-      key={route.key}
+      path={prop.layout + prop.path}
+      render={(props) => renderPage(props, prop)}
+      key={key}
     />
   ));
 

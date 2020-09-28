@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 // reactstrap components
 import {
@@ -26,6 +27,19 @@ export default function Home(props) {
 
   return (
     <>
+      <Redirect
+        to={{
+          pathname: '/auth/login',
+          search: '?utm=profile',
+          state: {
+            notifications: [
+              {
+                type: 'danger', icon: 'ni ni-bell-55', title: 'Iiih', text: 'O seu acesso expirou, por favor, faça login novamente', href: '/auth/landing', btnText: 'Inicio',
+              },
+            ],
+          },
+        }}
+      />
       <UserHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>

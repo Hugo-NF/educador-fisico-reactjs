@@ -74,10 +74,10 @@ $default:       #ffffff !default; // #172b4d
 $primary:       #5603ad !default;
 $secondary:     #f7fafc !default;
 $tertiary:      #9d03ad !default;
-$success:       $green !default;
-$info:          $teal !default;
-$warning:       $orange !default;
-$danger:        $red !default;
+$success:       #07bc0c !default;
+$info:          #3498db !default;
+$warning:       #f1c40f !default;
+$danger:        #e74c3c !default;
 $light:         $gray-500 !default;
 $dark:          $gray-900 !default;
 $darker:        darken($gray-900, 15%) !default;

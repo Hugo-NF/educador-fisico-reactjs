@@ -30,6 +30,7 @@ import { Images } from '../../constants';
 
 /* eslint-disable react/prop-types */
 /* eslint-disable react/require-default-props */
+/* eslint-disable react/no-array-index-key */
 export default function Sidebar(props) {
   const [collapseOpen, setCollapse] = useState(false);
 
@@ -37,16 +38,16 @@ export default function Sidebar(props) {
   // const activeRoute = (routeName) => (props.location.pathname.indexOf(routeName) > -1 ? 'active' : '');
 
   // creates the links that appear in the left menu / Sidebar
-  const createLinks = (routes) => routes.map((route) => (
-    <NavItem key={route.key}>
+  const createLinks = (routes) => routes.map((prop, key) => (
+    <NavItem key={key}>
       <NavLink
-        to={route.layout + route.path}
+        to={prop.layout + prop.path}
         tag={NavLinkRRD}
         onClick={() => setCollapse(false)}
         activeClassName="active"
       >
-        <i className={route.icon} />
-        {route.name}
+        <i className={prop.icon} />
+        {prop.name}
       </NavLink>
     </NavItem>
   ));
