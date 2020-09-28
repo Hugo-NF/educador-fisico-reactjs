@@ -1,5 +1,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
+import TextWithTitle from './TextWithTitle';
+import TextWithButton from './TextWithButton';
 
 const references = {
   default: toast,
@@ -15,17 +17,7 @@ const notifyRedirect = ({ location }) => {
   // Checks notifications from redirect
   notifications.forEach((notification) => {
     const toastFunction = references[notification.type];
-    toastFunction(() => (
-      <>
-        <div className="toast-header">
-          <i className={`${notification.icon} mr-2`} />
-          <strong className="mr-auto">{notification.title}</strong>
-        </div>
-        <div className="toast-body">
-          {notification.text}
-        </div>
-      </>
-    ), {
+    toastFunction(() => <TextWithButton {...notification} />, {
       position: 'bottom-right',
       autoClose: false,
       hideProgressBar: true,
